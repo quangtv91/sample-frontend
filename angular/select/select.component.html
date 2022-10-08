@@ -1,0 +1,50 @@
+<nz-form-item>
+  <ng-container *ngIf="!hideLabel">
+    <app-label-vertical
+      *ngIf="!labelHorizontal"
+      [content]="labelContent"
+      [required]="required"
+    ></app-label-vertical>
+
+    <app-label-horizontal
+      *ngIf="labelHorizontal"
+      [content]="labelContent"
+      [required]="required"
+      [span]="24 - span"
+    ></app-label-horizontal>
+  </ng-container>
+
+  <nz-form-control [nzSpan]="labelHorizontal ? span : null" [nzErrorTip]="errorTip">
+    <nz-select
+      #select
+      (nzOnSearch)="handleSearch($event)"
+      [formControl]="ngControl.control"
+      [nzMode]="nzMode"
+      class="w-100"
+      nzAllowClear
+      [nzDropdownRender]="openSearchModal ? footer : null"
+      [nzPlaceHolder]="placeHolder"
+      nzShowSearch
+      nzHideUnMatched
+      [nzDisabled]="disabled"
+      [(ngModel)]="value"
+      (ngModelChange)="handleSelectChange()"
+    >
+      <nz-option
+        *ngFor="let item of data"
+        [nzLabel]="staticLabelField ? item[labelField] : item[labelField] | translate"
+        [nzValue]="item[valueField]"
+      ></nz-option>
+    </nz-select>
+
+    <ng-template #footer>
+      <div *ngIf="!isOpenCreateModal" (click)="select.closeDropDown();  handleOpenSearch()" class="add-item">
+        <i nz-icon nzType="plus"></i> {{'Search' | translate}}
+      </div>
+
+      <div *ngIf="isOpenCreateModal" (click)="select.closeDropDown();  handleOpenSearch()" class="add-item">
+        <i nz-icon nzType="plus"></i> {{'Add item' | translate}}
+      </div>
+    </ng-template>
+  </nz-form-control>
+</nz-form-item>
