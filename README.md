@@ -1,2 +1,2 @@
 # sample-frontend
-This repo is an example of creating components custom in ReactJS and Angular.
+This repo is an example of creating components custom using Ant Design styling framework in ReactJS and Angular.
